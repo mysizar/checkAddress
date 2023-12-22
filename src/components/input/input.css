@@ -1,0 +1,17 @@
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  padding: 0.25rem 0.25rem 0;
+}
+
+.dropdown:empty {
+  border: none;
+  padding: 0;
+}
+
+.dropdown-row {
+  cursor: pointer;
+  text-align: start;
+  margin: 2px 0;
+  text-transform: capitalize;
+}
