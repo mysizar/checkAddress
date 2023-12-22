@@ -14,7 +14,7 @@ function App() {
   const [addressPair, setAddressPair] = useState([]);
 
   useEffect(() => {
-    fetch("./plz2.json")
+    fetch("./plz.json")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -25,19 +25,8 @@ function App() {
 
   useEffect(() => {
     const fetchStreet = async () => {
+      let code = plz.split(" ")[0];
       try {
-        // let page = 1;
-        let code = plz.split(" ")[0];
-        // let fullList = [];
-        // do {
-        //   // const response = await fetch(
-        //   //   `https://openplzapi.org/de/Streets?postalCode=${code}&page=${page}&pageSize=50`
-        //   // );
-        //   const streets = await response.json();
-        //   if (streets.length === 0) break;
-        //   fullList = fullList.concat(streets);
-        //   page++;
-        // } while (true);
         const response = await fetch(
           "https://overpass-api.de/api/interpreter",
           {
@@ -67,56 +56,17 @@ function App() {
             str: i.tags["addr:street"],
           };
         });
-        console.log("adress", nums);
+        // console.log("address", nums);
         setAddressPair(nums);
-
-        // console.log(fullList);
-        // const arr = fullList.map((i) => i.name);
-        // setStreetList(arr);
       } catch (error) {
         console.log(error);
       }
     };
-    console.log(("new plz:", plz));
+    // console.log(("new plz:", plz));
     fetchStreet();
   }, [plz]);
 
   useEffect(() => {
-    // async function queryOverpass() {
-    //   try {
-    //     const response = await fetch(
-    //       "https://overpass-api.de/api/interpreter",
-    //       {
-    //         method: "POST",
-    //         /* The body contains the query */
-    //         body:
-    //           "data=" +
-    //           encodeURIComponent(`
-    //         [out:json];
-
-    //         nwr["addr:city"="${plz.split(" ")[1]}"]["addr:street"="${
-    //             street.split(" ")[0]
-    //           }"];
-    //         for(t["addr:housenumber"]) {
-    //           make stat housenumber=_.val;
-    //           out;
-    //         }
-    //         `),
-    //       } //nwr["addr:city"="Neu-Isenburg"]["addr:street"="Berliner Straße"]({{bbox}});
-    //     );
-    //     const data = await response.json();
-    //     console.log(data);
-    //     const arr = data.elements.map((i) => i.tags.housenumber);
-    //     setHousesList(arr);
-    //     console.log(("new street:", street));
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
-
-    // queryOverpass();
-    console.log(street);
-
     let nums = addressPair.map((i) => {
       if (i.str === street) return i.num;
     });
@@ -124,8 +74,9 @@ function App() {
     nums = nums.filter(
       (el, i, arr) => el !== undefined && arr.indexOf(el) === i
     ); // return only unique items
-    console.log("numbers", nums);
     setHousesList(nums);
+    // console.log(street);
+    // console.log("numbers", nums);
   }, [street, plz]);
 
   return (

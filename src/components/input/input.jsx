@@ -25,6 +25,7 @@ function Input({ list, setter, ph }) {
           <input
             value={inputValue}
             onChange={(event) => setInputValue(event.target.value)}
+            onClick={() => setInputValue("")}
             className="add-item-input"
             placeholder={ph}
           />
