@@ -17,7 +17,7 @@ function App() {
     fetch("./plz.json")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         const arr = data.map((i) => i.Plz + " " + i.Ort);
         setPlzList(arr);
       });
@@ -41,14 +41,14 @@ function App() {
           }
         );
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
 
         let streets = data.elements.map((i) => i.tags["addr:street"]);
         streets = streets.filter(
           (el, i, arr) => el !== undefined && arr.indexOf(el) === i
         ); // return only unique items
         setStreetList(streets);
-        console.log("streetList", streets);
+        // console.log("streetList", streets);
 
         const nums = data.elements.map((i) => {
           return {

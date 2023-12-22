@@ -1,11 +1,15 @@
 import "./input.css";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 function Input({ list, setter, ph }) {
   const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    setInputValue("");
+  }, [list]);
 
   const addNewItem = () => {
     if (!inputValue.trim()) return;
